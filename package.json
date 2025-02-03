@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/RobertoMachorro/cortadito-sample/issues"
   },
-  "homepage": "https://github.com/RobertoMachorro/cortadito-sample#readme"
+  "homepage": "https://github.com/RobertoMachorro/cortadito-sample#readme",
+  "dependencies": {
+    "cortadito": "^1.0.2",
+    "express": "^4.21.2"
+  }
 }
