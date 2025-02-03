@@ -9,7 +9,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
 
@@ -32,8 +31,6 @@ jobs:
 
       - name: Build container tags
         id: containertags
-        env:
-          RUN_NUM: ${{ github.run_number }}
         run: |
           BRANCH_NAME=`[[ ! -z "${{ github.head_ref }}" ]] && echo "${{ github.head_ref }}" || echo "main"`
           VERSION=`git describe --always`
