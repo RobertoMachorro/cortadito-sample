@@ -29,15 +29,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build container tags
+      - name: Build Container Tags
         id: containertags
+        env:
+          RUN_NUM: ${{ github.run_number }}
         run: |
           BRANCH_NAME=`[[ ! -z "${{ github.head_ref }}" ]] && echo "${{ github.head_ref }}" || echo "main"`
-          VERSION=`git describe --always`
-          echo "::set-output name=container_tag::$REGISTRY/${{ github.repository }}/$BRANCH_NAME"
-          echo "::set-output name=version_tag::${VERSION/main-/}"
+          VERSION=`git rev-parse --short HEAD`
+          echo "container_tag=$REGISTRY/${{ github.repository }}/$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "version_tag=${VERSION/main-/}" >> $GITHUB_OUTPUT
 
-      - name: Extract Docker metadata
+      - name: Show Container Tags
+        run: echo "[${{ steps.containertags.outputs.version_tag }}@${{ steps.containertags.outputs.container_tag }}]"
+
+      - name: Extract Metadata for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -45,7 +50,7 @@ jobs:
           tags: |
             type=raw,value=${{ steps.containertags.outputs.version_tag }}
 
-      - name: Set up Docker Buildx
+      - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
