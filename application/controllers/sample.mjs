@@ -13,11 +13,13 @@ export default function sample(controller) {
 	})
 
 	controller.get('/set', (request, response) => {
+		// Requires session* options to be setup
 		request.session.timestamp = Date.now()
 		response.json({session: request.session})
 	})
 
 	controller.get('/get', (request, response) => {
+		// Requires session* options to be setup
 		response.json({session: request.session})
 	})
 }
