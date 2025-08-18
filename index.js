@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
-import process from 'node:process'
+import {env} from 'node:process'
 import Cortadito from 'cortadito'
+// Controllers
 import sample from './application/controllers/sample.mjs'
 
 const options = {
-	listenPort: process.env.PORT // Mandatory
+	listenPort: env.PORT, // Mandatory
+	sessionRedisUrl: env.REDIS_URL, // Optional
+	sessionSecret: env.SESSION_SECRET, // Optional
 }
 
 const app = new Cortadito()
