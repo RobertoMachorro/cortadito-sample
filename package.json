@@ -25,7 +25,7 @@
     "xo": "^0.60.0"
   },
   "dependencies": {
-    "cortadito": "^1.0.2",
+    "cortadito": "^1.0.4",
     "express": "^4.21.2"
   }
 }
